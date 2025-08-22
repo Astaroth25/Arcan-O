@@ -1,0 +1,77 @@
+.dungeon-container {
+    width: 100%;
+    height: 100dvh;
+    background-image: url(/Assets/Background/bg1920.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.dungeon-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    mask-image: radial-gradient(circle var(--light-size, 250px) at var(--x, 50%) var(--y, 50%),
+            transparent 0%,
+            black);
+    -webkit-mask-image: radial-gradient(circle var(--light-size, 250px) at var(--x, 50%) var(--y, 50%),
+            transparent 0%,
+            black);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.dungeon-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle var(--light-size) at var(--x) var(--y),
+            rgba(255, 165, 0, 0.35) 0%,
+            rgba(255, 140, 0, 0.2) 40%,
+            rgba(255, 69, 0, 0.1) 60%,
+            transparent 80%);
+    pointer-events: none;
+    z-index: 2;
+    animation: torch-flicker 2s infinite alternate;
+}
+
+@keyframes torch-flicker {
+    0% {
+        --light-size: 190px;
+    }
+
+    25% {
+        --light-size: 200px;
+    }
+
+    50% {
+        --light-size: 210px;
+    }
+
+    100% {
+        --light-size: 220px;
+    }
+}
+
+.cursor {
+    position: fixed;
+    left: var(--x);
+    top: var(--y);
+    width: fit-content;
+    height: fit-content;
+    z-index: 100;
+    transform: translate(-50% -50%);
+    pointer-events: none;
+
+    img {
+        transform: rotate(-15deg);
+    }
+}
