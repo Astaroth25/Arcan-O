@@ -1,0 +1,37 @@
+@use '../../SCSS/mixins' as mixin;
+
+button {
+    @include mixin.no-selectable;
+    @include mixin.img-cover-background('/Assets/Components/Buttons/cell.png');
+    width: fit-content;
+    height: auto;
+    padding: 5px 20px;
+    position: relative;
+    z-index: 0;
+
+    @media (min-width: 768px) {
+        padding: 10px 40px;
+    }
+}
+
+button::after {
+    @include mixin.img-cover-background('/Assets/Components/Buttons/cell_hover.png');
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+// Activar la transición en desktop
+button:hover::after {
+    opacity: 1;
+}
+
+// Activar la transición en mobile
+button:active::after {
+    opacity: 1;
+}
