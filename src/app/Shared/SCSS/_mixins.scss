@@ -1,0 +1,13 @@
+@mixin img-cover-background($url) {
+    background-image: url($url);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+// Elemento no seleccionable
+@mixin no-selectable {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
