@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@use './app/Shared/SCSS/reset';
+
+// Fuente Global
+@font-face {
+    font-family: 'Jersey10';
+    src: url(/Assets/Font/Jersey10.woff2);
+    src: url(/Assets/Font/Jersey10.woff);
+    font-weight: 100;
+    font-style: normal;
+}
