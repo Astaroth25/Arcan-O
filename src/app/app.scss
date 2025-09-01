@@ -1,44 +1,36 @@
-.dungeon-container {
+@use '../app/Shared/SCSS/mixins' as mixin;
+@use 'sass:math';
+
+.dungeon-container-no-light,
+.dungeon-container-light {
     width: 100%;
     height: 100dvh;
-    background-image: url(/Assets/Background/bg1920.png);
+    background-image: url(/assets/background/bg1920.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     position: relative;
 }
 
-.dungeon-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    mask-image: radial-gradient(circle var(--light-size, 250px) at var(--x, 50%) var(--y, 50%),
-            transparent 0%,
-            black);
-    -webkit-mask-image: radial-gradient(circle var(--light-size, 250px) at var(--x, 50%) var(--y, 50%),
+// Lighting mask for cursor
+.dungeon-container-no-light::before {
+    @include mixin.absolute-pseudo-element;
+    background-color: rgba(0, 0, 0, var(--opacity));
+    mask-image: radial-gradient(circle var(--light-size) at var(--x) var(--y),
             transparent 0%,
             black);
     z-index: 1;
-    pointer-events: none;
+    animation: torch-flicker 2s infinite alternate;
 }
 
-.dungeon-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+.dungeon-container-no-light::after {
+    @include mixin.absolute-pseudo-element;
     height: 100%;
     background: radial-gradient(circle var(--light-size) at var(--x) var(--y),
-            rgba(255, 165, 0, 0.35) 0%,
-            rgba(255, 140, 0, 0.2) 40%,
-            rgba(255, 69, 0, 0.1) 60%,
+            rgba(255, 165, 0, 0.25) 0%,
+            rgba(255, 140, 0, 0.15) 40%,
+            rgba(255, 69, 0, 0.05) 60%,
             transparent 80%);
-    pointer-events: none;
     z-index: 2;
     animation: torch-flicker 2s infinite alternate;
 }
@@ -61,6 +53,38 @@
     }
 }
 
+// Lighting mask for torch and brazier
+.dungeon-container-light::before {
+    @include mixin.absolute-pseudo-element;
+    background-color: rgba(0, 0, 0, var(--opacity));
+    mask-image: radial-gradient(circle 150dvh at var(--moveX) var(--moveY),
+            transparent 0%,
+            black);
+    z-index: 1;
+    animation: torch-flicker-smooth 8s infinite alternate;
+}
+
+.dungeon-container-light::after {
+    @include mixin.absolute-pseudo-element;
+    height: 100%;
+    background: radial-gradient(circle 150dvh at var(--moveX) var(--moveY),
+            rgba(255, 165, 0, 0.25) 0%,
+            rgba(255, 140, 0, 0.15) 40%,
+            rgba(255, 69, 0, 0.05) 60%,
+            transparent 80%);
+    z-index: 2;
+    animation: torch-flicker-smooth 8s infinite alternate;
+}
+
+@keyframes torch-flicker-smooth {
+    @for $i from 0 through 72 {
+        #{math.percentage(math.div($i, 72))} {
+            --moveX: calc(var(--positionX) + 10% * cos(#{$i * 10deg}));
+            --moveY: calc(var(--positionY) + 10% * sin(#{$i * 10deg}));
+        }
+    }
+}
+
 .cursor {
     position: fixed;
     left: var(--x);
@@ -72,6 +96,6 @@
     pointer-events: none;
 
     img {
-        transform: rotate(-15deg);
+        transform: rotate(var(--deg));
     }
 }

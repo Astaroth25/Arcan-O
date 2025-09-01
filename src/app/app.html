@@ -1,11 +1,15 @@
-<!-- Contenedor con la imagen y la máscara -->
-<div class="dungeon-container" [style.--x.px]="currentX" [style.--y.px]="currentY">
+@if(combinedState$ | async ; as state){
+<div [ngClass]="state.illumination.class" [style.--x.px]="state.cursor.currentX" [style.--y.px]="state.cursor.currentY" [style.--positionX]="(position$ | async)?.x" [style.--positionY]="(position$ | async)?.y" [style.--opacity]="state.illumination.opacity">
     <router-outlet />
-    <basic-button/>
-    <wall-torch/>
+    @if ( (screenSize$ | async) === 'desktop') {
+    <wall-torch />
+    }
+    @else {
+    <brazier />
+    }
 </div>
 
-<!-- Cursor -->
-<div class="cursor" [style.--x.px]="targetX" [style.--y.px]="targetY">
-    <img src="/Assets/Cursor/torch.svg" alt="Guantelete">
+<div class="cursor" [style.--x.px]="state.cursor.targetX" [style.--y.px]="state.cursor.targetY">
+    <img [src]="`assets/cursor/${state.cursor.cursorName}`" [alt]="state.cursor.cursorName" [style.--deg]="state.cursor.deg">
 </div>
+}

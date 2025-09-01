@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Basic } from "./Shared/Buttons/basic/basic";
 import { WallTorch } from "./Shared/Lighting/wall-torch/wall-torch";
+import { AsyncPipe, NgClass } from '@angular/common';
+import { Brazier } from "./Shared/Lighting/brazier/brazier";
+import { ScreenSizeService } from './Core/Services/screen-size';
+import { CursorService } from './Core/Services/cursor';
+import { combineLatest, map, Observable } from 'rxjs';
+import { IlluminationService } from './Core/Services/illumination';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Basic, WallTorch],
+  imports: [AsyncPipe, NgClass, RouterOutlet, WallTorch, Brazier],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   host: {
@@ -13,34 +18,26 @@ import { WallTorch } from "./Shared/Lighting/wall-torch/wall-torch";
     '(document:touchmove)': 'onTouchMove($event)'
   }
 })
-export class App implements OnInit {
-  protected targetX = window.innerWidth / 2;
-  protected targetY = window.innerHeight / 2;
-  protected currentX = this.targetX;
-  protected currentY = this.targetY;
-  private speed: number = 0.05;
+export class App {
+  private cursorService = inject(CursorService);
+  private illuminationService = inject(IlluminationService)
 
-  // Actualiza el movimiento del mouse en desktop
+  protected combinedState$ = combineLatest([this.cursorService.cursorState$, this.illuminationService.illuminationState$]).pipe(
+    map(([cursorState, illuminationState]) => ({ cursor: cursorState, illumination: illuminationState }))
+  );
+
+  private screenSizeService = inject(ScreenSizeService);
+  protected screenSize$ = this.screenSizeService.screenSize$;
+  protected position$: Observable<{ x: string, y: string }> = this.screenSizeService.screenSize$.pipe(map(size => {
+    if (size === 'desktop') return { x: '95%', y: '45%' };
+    else return { x: '50%', y: '90%' };
+  }));
+
   onMouseMove(event: MouseEvent) {
-    this.targetX = event.clientX;
-    this.targetY = event.clientY;
+    this.cursorService.updateTargetPosition(event.clientX, event.clientY);
   }
 
-  //Actualiza el movimiento del touch en mobile
   onTouchMove(event: TouchEvent) {
-    this.targetX = event.touches[0].clientX;
-    this.targetY = event.touches[0].clientY;
+    this.cursorService.updateTargetPosition(event.touches[0].clientX, event.touches[0].clientY);
   }
-
-  ngOnInit(): void {
-    this.flicker();
-  }
-
-  flicker(): void {
-    this.currentX += (this.targetX - this.currentX) * this.speed;
-    this.currentY += (this.targetY - this.currentY) * this.speed;
-
-    requestAnimationFrame(() => this.flicker());
-  }
-
 }
