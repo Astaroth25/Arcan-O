@@ -2,7 +2,7 @@
 
 button {
     @include mixin.no-selectable;
-    @include mixin.img-cover-background('/Assets/Components/Buttons/cell.png');
+    @include mixin.img-cover-background('/assets/components/buttons/cell.png');
     width: fit-content;
     height: auto;
     padding: 5px 20px;
@@ -15,7 +15,7 @@ button {
 }
 
 button::after {
-    @include mixin.img-cover-background('/Assets/Components/Buttons/cell_hover.png');
+    @include mixin.img-cover-background('/assets/components/buttons/cell_hover.png');
     content: '';
     position: absolute;
     top: 0;
