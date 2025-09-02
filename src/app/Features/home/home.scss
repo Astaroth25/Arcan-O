@@ -1,0 +1,6 @@
+@use '../../Shared/SCSS/mixins' as mixin;
+
+* {
+    color: white;
+    @include mixin.padding-x;
+}
