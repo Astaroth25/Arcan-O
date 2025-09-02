@@ -12,7 +12,17 @@
     position: relative;
 }
 
-// Lighting mask for cursor
+.dungeon-container-light {
+    --positionX: 50%;
+    --positionY: 90%;
+
+    @media (min-width: 768px) {
+        --positionX: 95%;
+        --positionY: 45%;
+    }
+}
+
+// Máscara para el cursor
 .dungeon-container-no-light::before {
     @include mixin.absolute-pseudo-element;
     background-color: rgba(0, 0, 0, var(--opacity));
@@ -53,7 +63,7 @@
     }
 }
 
-// Lighting mask for torch and brazier
+// Máscara para la antorcha de pared / brasero
 .dungeon-container-light::before {
     @include mixin.absolute-pseudo-element;
     background-color: rgba(0, 0, 0, var(--opacity));
