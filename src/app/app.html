@@ -1,5 +1,5 @@
 @if(combinedState$ | async ; as state){
-<div [ngClass]="state.illumination.class" [style.--x.px]="state.cursor.currentX" [style.--y.px]="state.cursor.currentY" [style.--positionX]="(position$ | async)?.x" [style.--positionY]="(position$ | async)?.y" [style.--opacity]="state.illumination.opacity">
+<div [ngClass]="state.illumination.class" [style.--x.px]="state.cursor.currentX" [style.--y.px]="state.cursor.currentY" [style.--opacity]="state.illumination.opacity">
     <router-outlet />
     @if ( (screenSize$ | async) === 'desktop') {
     <wall-torch />

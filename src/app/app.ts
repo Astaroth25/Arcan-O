@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WallTorch } from "./Shared/Lighting/wall-torch/wall-torch";
 import { AsyncPipe, NgClass } from '@angular/common';
-import { Brazier } from "./Shared/Lighting/brazier/brazier";
 import { ScreenSizeService } from './Core/Services/screen-size';
 import { CursorService } from './Core/Services/cursor';
 import { combineLatest, map, Observable } from 'rxjs';
 import { IlluminationService } from './Core/Services/illumination';
+import { WallTorch } from './Shared/Components/Lighting/wall-torch/wall-torch';
+import { Brazier } from './Shared/Components/Lighting/brazier/brazier';
 
 @Component({
   selector: 'app-root',
@@ -28,10 +28,6 @@ export class App {
 
   private screenSizeService = inject(ScreenSizeService);
   protected screenSize$ = this.screenSizeService.screenSize$;
-  protected position$: Observable<{ x: string, y: string }> = this.screenSizeService.screenSize$.pipe(map(size => {
-    if (size === 'desktop') return { x: '95%', y: '45%' };
-    else return { x: '50%', y: '90%' };
-  }));
 
   onMouseMove(event: MouseEvent) {
     this.cursorService.updateTargetPosition(event.clientX, event.clientY);
