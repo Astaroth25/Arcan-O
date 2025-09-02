@@ -23,3 +23,11 @@
     -moz-user-select: none;
     -ms-user-select: none;
 }
+
+@mixin padding-x {
+    padding: 0% 10%;
+
+    @media (min-width: 768) {
+        padding: 0% 20%;
+    }
+}
