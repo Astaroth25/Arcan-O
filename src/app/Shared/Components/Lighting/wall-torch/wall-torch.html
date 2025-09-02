@@ -1,0 +1,3 @@
+<div (click)="changeLit()">
+    <img [src]="'/assets/components/lighting/'+ ((lit$ | async) ? 'wall_torch_lit.svg' : 'wall_torch_unlit.svg')" width="120">
+</div>
