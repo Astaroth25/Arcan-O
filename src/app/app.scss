@@ -15,10 +15,12 @@
 .dungeon-container-light {
     --positionX: 50%;
     --positionY: 90%;
+    --illumination-size: 100dvh;
 
     @media (min-width: 768px) {
         --positionX: 95%;
         --positionY: 45%;
+        --illumination-size: 150dvh;
     }
 }
 
@@ -67,26 +69,26 @@
 .dungeon-container-light::before {
     @include mixin.absolute-pseudo-element;
     background-color: rgba(0, 0, 0, var(--opacity));
-    mask-image: radial-gradient(circle 150dvh at var(--moveX) var(--moveY),
+    mask-image: radial-gradient(circle var(--illumination-size) at var(--moveX) var(--moveY),
             transparent 0%,
             black);
     z-index: 1;
-    animation: torch-flicker-smooth 8s infinite alternate;
+    animation: illumination-move 8s infinite alternate;
 }
 
 .dungeon-container-light::after {
     @include mixin.absolute-pseudo-element;
     height: 100%;
-    background: radial-gradient(circle 150dvh at var(--moveX) var(--moveY),
+    background: radial-gradient(circle var(--illumination-size) at var(--moveX) var(--moveY),
             rgba(255, 165, 0, 0.25) 0%,
             rgba(255, 140, 0, 0.15) 40%,
             rgba(255, 69, 0, 0.05) 60%,
             transparent 80%);
     z-index: 2;
-    animation: torch-flicker-smooth 8s infinite alternate;
+    animation: illumination-move 8s infinite alternate;
 }
 
-@keyframes torch-flicker-smooth {
+@keyframes illumination-move {
     @for $i from 0 through 72 {
         #{math.percentage(math.div($i, 72))} {
             --moveX: calc(var(--positionX) + 10% * cos(#{$i * 10deg}));
