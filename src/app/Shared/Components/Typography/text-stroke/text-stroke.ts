@@ -7,5 +7,5 @@ import { Component, input } from '@angular/core';
   styleUrl: './text-stroke.scss'
 })
 export class TextStroke {
-  text = input<string>('Value');
+  text = input<string>();
 }
