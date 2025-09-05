@@ -7,10 +7,11 @@ import { combineLatest, map, Observable } from 'rxjs';
 import { IlluminationService } from './Core/Services/illumination';
 import { WallTorch } from './Shared/Components/Lighting/wall-torch/wall-torch';
 import { Brazier } from './Shared/Components/Lighting/brazier/brazier';
+import { Navbar } from "./Core/Components/navbar/navbar";
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, NgClass, RouterOutlet, WallTorch, Brazier],
+  imports: [AsyncPipe, NgClass, RouterOutlet, WallTorch, Brazier, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   host: {
