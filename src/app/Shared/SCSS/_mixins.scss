@@ -1,8 +1,10 @@
 // Background con imagen que cubre todo su contenedor.
 @mixin img-cover-background($url) {
-    background-image: url($url);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    & {
+        background-image: url($url);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
 }
 
 // Posicionamiento para pseudo elementos ::before y ::after
@@ -18,16 +20,28 @@
 
 // Elemento no seleccionable
 @mixin no-selectable {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    & {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    img {
+        pointer-events: none;
+    }
 }
 
 @mixin padding-x {
-    padding: 0% 10%;
+    & {
+        padding: 0% 5%;
+    }
 
-    @media (min-width: 768) {
-        padding: 0% 20%;
+    @media (min-width: 768px) {
+        padding: 0% 15%;
+    }
+
+    @media (min-width: 1024px) {
+        padding: 0% 10%;
     }
 }
