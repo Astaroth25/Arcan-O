@@ -1,0 +1,43 @@
+@use '../../../Shared/SCSS/mixins' as mixin;
+
+nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1;
+    @include mixin.no-selectable;
+    @include mixin.padding-x;
+}
+
+.navbar-toggle {
+    position: absolute;
+    right: 5%;
+
+    & img {
+        width: 64px;
+    }
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+.menu-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    color: white;
+}
+
+.menu {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+}
