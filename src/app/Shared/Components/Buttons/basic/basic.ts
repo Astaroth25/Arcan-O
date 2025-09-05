@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { TextStroke } from "../../Typography/text-stroke/text-stroke";
 
 @Component({
@@ -8,5 +8,5 @@ import { TextStroke } from "../../Typography/text-stroke/text-stroke";
   styleUrl: './basic.scss'
 })
 export class Basic {
-
+  text = input<string>();
 }
