@@ -1,6 +1,9 @@
+@use '../../../SCSS/mixins' as mixin;
+
 div {
     position: fixed;
     right: 0;
     top: 50%;
     transform: translate(0, -50%);
+    @include mixin.no-selectable;
 }
